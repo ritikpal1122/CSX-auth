@@ -1,0 +1,26 @@
+{
+  "name": "csxauth",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev" : "nodemon backend/index.js",
+    "start": "node backend/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ritikpal1122/CSX-auth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/ritikpal1122/CSX-auth/issues"
+  },
+  "homepage": "https://github.com/ritikpal1122/CSX-auth#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
+  }
+}
