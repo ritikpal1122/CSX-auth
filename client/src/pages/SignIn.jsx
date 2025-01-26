@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -8,19 +8,37 @@ const SignIn = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("https://your-api-url.com/signin", {
-        email,
-        password,
+      const response = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       });
-      console.log(response.data);
-      // Redirect to dashboard or home page
-      window.location.href = "/";
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (!data.success) {
+        setError(data.message);
+        setLoading(false);
+      } else {
+       console.log("Sign in successful");
+      }
+      setEmail('');
+      setPassword('');
+      navigate("/");
     } catch (error) {
-      setError(error.message);
+      console.log(error)
+      setError("Failed to sign in");
       setLoading(false);
     }
   };

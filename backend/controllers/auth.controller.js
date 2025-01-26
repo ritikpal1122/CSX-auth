@@ -36,7 +36,7 @@ export const signin = async (req, res, next) => {
     const token = jwt.sign({id: validUser._id}, process.env.JWT_SECRET);
     const {password: hashedPassword, ...rest} = validUser._doc
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
-    res.status(200).cookie('access_token', token, {httpOnly: true, expires: sevenDays}).json(rest);
+    res.status(200).cookie('access_token', token, {httpOnly: true, maxAge: sevenDays}).json(rest);
   } catch (error) {
     next(error);
   }
