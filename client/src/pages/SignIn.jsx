@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
- const{error, loading}  = useSelector((state) => state.user);
+  const { loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -83,7 +84,8 @@ const SignIn = () => {
             required
           />
         </div>
-        {error && <p className="text-red-500 text-xs italic">{ error ? error || "Something went wrong!": ""}</p>}
+        {error && <p className="text-red-500 text-xs italic">{error.message || "Something went wrong!"}</p>}
+
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit"

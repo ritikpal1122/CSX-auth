@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import OAuth from '../components/OAuth';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
@@ -76,12 +77,15 @@ const SignUp = () => {
           />
         </div>
         {error && <p className="text-red-500 text-xs italic">{error}</p>}
+        <div className='mb-2 '>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-blue-500 w-100 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit"
         >
           Sign Up
         </button>
+        </div>
+        <OAuth/>
         <p className="text-gray-300 text-xs mt-4">
           Already have an account?{' '}
           <Link to="/sign-in" className="text-blue-500 hover:text-blue-700">
