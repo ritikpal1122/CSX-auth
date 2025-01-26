@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { signInFailure, signInStart, signInSuccess } from "../redux/userSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+ const{error, loading}  = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    dispatch(signInStart());
     try {
+      
       const response = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -27,20 +30,21 @@ const SignIn = () => {
 
       const data = await response.json();
 
-      if (!data.success) {
-        setError(data.message);
-        setLoading(false);
-      } else {
-       console.log("Sign in successful");
-      }
+    
+      if (!data.success === false) {
+        dispatch(signInFailure(data));
+        return
+      } 
+
       setEmail('');
       setPassword('');
+      dispatch(signInSuccess(data));
       navigate("/");
     } catch (error) {
-      console.log(error)
-      setError("Failed to sign in");
-      setLoading(false);
+      dispatch(signInFailure(error));
+
     }
+
   };
 
   return (
@@ -79,7 +83,7 @@ const SignIn = () => {
             required
           />
         </div>
-        {error && <p className="text-red-500 text-xs italic">{error}</p>}
+        {error && <p className="text-red-500 text-xs italic">{ error ? error || "Something went wrong!": ""}</p>}
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit"

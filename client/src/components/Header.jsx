@@ -22,7 +22,7 @@ const Header = () => {
               </Link>
             </li>
             <li className="text-gray-500 font-bold">
-              <Link to="/signin">
+              <Link to="/sign-in">
                 <a className="hover:text-blue-400 transition duration-300">SignIn</a>
               </Link>
             </li>
